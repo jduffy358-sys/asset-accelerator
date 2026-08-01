@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local scenario store (dev stand-in for a real DB)
+/data
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
