@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import { track } from "@vercel/analytics";
 import {
   ResponsiveContainer, AreaChart, Area, BarChart, Bar, LineChart, Line,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend,
@@ -62,6 +63,7 @@ export default function CashFlowMachine() {
       if (!res.ok) { setEmailError(data.error || "Couldn't save — try again."); return; }
       setSaved((prev) => [data.scenario, ...prev.filter((x) => x.key !== data.scenario.key)]);
       setScenName("");
+      track("opt_in_completed", { refiOn: refi.on, horizon: p.horizon });
     } finally {
       setSaving(false);
     }
@@ -496,7 +498,8 @@ export default function CashFlowMachine() {
         <div style={{ textAlign: "center", fontSize: 11, color: C.muted, marginTop: 30, lineHeight: 1.6 }}>
           Figures are pre-tax and for illustration only — not investment, tax, or lending advice. Assumes property depreciation largely
           shelters the rental income, and the stock account is held in a tax-deferred account (like an IRA), so it&apos;s taxed on withdrawal.
-          Covered-call and dividend income are not guaranteed.
+          Covered-call and dividend income are not guaranteed. All investing involves risk, including possible loss of principal — real
+          estate and securities markets can go down as well as up, and past performance or hypothetical projections do not guarantee future results.
         </div>
       </div>
     </div>
